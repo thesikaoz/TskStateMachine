@@ -1,4 +1,4 @@
-package tools.statemachine.rules;
+package statemachine.rules;
 import flixel.FlxG;
 /**
  * Contains all the necesary data and methods for a time based rule.

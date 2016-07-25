@@ -1,6 +1,6 @@
-package tools.statemachine.states;
-import tools.statemachine.behaviours.TskBaseBehaviour;
-import tools.statemachine.rules.AfterRule;
+package statemachine.states;
+import statemachine.behaviours.TskBaseBehaviour;
+import statemachine.rules.AfterRule;
 import tools.statemachine.rules.ConditionalRule;
 import flixel.FlxSprite;
 /**

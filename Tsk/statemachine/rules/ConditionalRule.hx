@@ -1,4 +1,4 @@
-package tools.statemachine.rules;
+package statemachine.rules;
 
 /**
  * Holds all the necesary parameters for a transitional rule to happen.

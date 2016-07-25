@@ -1,4 +1,4 @@
-package tools.extended;
+package extended;
 
 /**
  * ...

@@ -1,4 +1,4 @@
-package tools.statemachine;
+package statemachine;
 
 import tools.statemachine.machines.GraphicStateMachine;
 import flixel.FlxSprite;

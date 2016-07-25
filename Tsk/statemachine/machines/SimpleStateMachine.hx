@@ -1,6 +1,6 @@
-package tools.statemachine.machines;
-import tools.statemachine.behaviours.TskBaseBehaviour;
-import tools.statemachine.states.State;
+package statemachine.machines;
+import statemachine.behaviours.TskBaseBehaviour;
+import statemachine.states.State;
 import flixel.FlxBasic;
 import flixel.FlxSprite;
 import flixel.FlxG;
