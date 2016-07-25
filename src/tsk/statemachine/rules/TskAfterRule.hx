@@ -1,10 +1,10 @@
-package statemachine.rules;
+package tsk.statemachine.rules;
 import flixel.FlxG;
 /**
  * Contains all the necesary data and methods for a time based rule.
  * @author Dany
  */
-class AfterRule extends ConditionalRule
+class TskAfterRule extends TskRule
 {
 
 	/**

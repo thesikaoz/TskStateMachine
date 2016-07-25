@@ -1,0 +1,12 @@
+{
+  "name": "TskStateMachine",
+  "url" : "https://github.com/thesikaoz/TskStateMachine",
+  "license": "MIT",
+  "tags": ["haxeflixel","game","state machine","finite state machine","fsm","ai","artificial intelligence"],
+  "description": "A finite state machine library for HaxeFlixel",
+  "version": "0.0.1",
+  "classPath": "src/",
+  "releasenote": "Initial release, fully functional with several programming modes, might change in the near future.",
+  "contributors": ["DanoVazquez"],
+  "dependencies": {}
+}

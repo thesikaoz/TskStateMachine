@@ -1,10 +1,10 @@
-package statemachine.rules;
+package tsk.statemachine.rules;
 
 /**
  * Holds all the necesary parameters for a transitional rule to happen.
  * @author Dany
  */
-class ConditionalRule
+class TskRule
 {
 	/**
 	 * The destiny of this rule.

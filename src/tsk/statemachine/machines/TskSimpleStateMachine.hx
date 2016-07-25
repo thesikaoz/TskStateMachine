@@ -1,6 +1,6 @@
-package statemachine.machines;
-import statemachine.behaviours.TskBaseBehaviour;
-import statemachine.states.State;
+package tsk.statemachine.machines;
+import tsk.statemachine.behaviours.TskBaseBehaviour;
+import tsk.statemachine.states.TskState;
 import flixel.FlxBasic;
 import flixel.FlxSprite;
 import flixel.FlxG;
@@ -9,7 +9,7 @@ import flixel.FlxG;
  * with any Flixel object as long as it can update the machine calling this class' update() method.
  * @author Dany
  */
-class SimpleStateMachine extends State
+class TskSimpleStateMachine extends TskState
 {
 	/**
 	 * A string containing this machine's current state's name.
@@ -19,7 +19,7 @@ class SimpleStateMachine extends State
 	/**
 	 * A pointer to the current state of the machine.
 	 */
-	private var state:State;
+	private var state:TskState;
 	
 	/**
 	 * Wheter this machine should be in execution.
@@ -29,7 +29,7 @@ class SimpleStateMachine extends State
 	/**
 	 * Array of posible machine states.
 	 */
-	private var states:Array<State>;
+	private var states:Array<TskState>;
 	/**
 	 * The name of the first state, to be used by start() and restart().
 	 */
@@ -46,7 +46,7 @@ class SimpleStateMachine extends State
 	 */
 	public function new(_name:String) {
 		super(_name);
-		this.states = new Array<State>();
+		this.states = new Array<TskState>();
 		paused = true;
 	}
 	
@@ -72,7 +72,7 @@ class SimpleStateMachine extends State
 	public function printDebug() {
 		FlxG.log.add("States for " + name+":");
 		for ( st in states) {
-			var _st:State = cast st;
+			var _st:TskState = cast st;
 			FlxG.log.add(st.name);
 		}
 		FlxG.log.add("Initial State: " + startingState);
@@ -114,7 +114,7 @@ class SimpleStateMachine extends State
 	 * @return Wheter the new state was initiated succesfully
 	 */
 	public function forceState(_state:String,?_force:Bool=false):Bool {
-		var s:State = getState(_state);
+		var s:TskState = getState(_state);
 		if (s != null) {
 			if (!_force){
 				if(state!=null){
@@ -136,7 +136,7 @@ class SimpleStateMachine extends State
 	 */
 	public function addState(s:String,?_behaviour:TskBehaviour<FlxSprite>) {
 		removeState(s);
-		var _s:State = new State(s,_behaviour);
+		var _s:TskState = new TskState(s,_behaviour);
 		this.states.push(_s);
 	}
 	
@@ -145,7 +145,7 @@ class SimpleStateMachine extends State
 	 * handled as a state by this machine.
 	 * @param	sm The substate machine.
 	 */
-	public function addSubMachine(sm:SimpleStateMachine) {
+	public function addSubMachine(sm:TskSimpleStateMachine) {
 		states.push(sm);
 	}
 	
@@ -155,7 +155,7 @@ class SimpleStateMachine extends State
 	 * @param	s The name of the state.
 	 */
 	public function removeState(s:String) {
-		var _s:State = getState(s);
+		var _s:TskState = getState(s);
 		if (_s != null) {
 			this.states.remove(_s);
 		}
@@ -179,8 +179,8 @@ class SimpleStateMachine extends State
 							lastState = currentState;
 							
 							//we starte it if it's a machine
-							if (Std.instance(state, SimpleStateMachine) != null) {
-								var sm:SimpleStateMachine = cast state;
+							if (Std.instance(state, TskSimpleStateMachine) != null) {
+								var sm:TskSimpleStateMachine = cast state;
 								sm.restart();
 							}
 							
@@ -191,8 +191,8 @@ class SimpleStateMachine extends State
 						return;
 					}
 				}
-				if (Std.instance(state, SimpleStateMachine) != null) {
-					var sm:SimpleStateMachine = cast state;
+				if (Std.instance(state, TskSimpleStateMachine) != null) {
+					var sm:TskSimpleStateMachine = cast state;
 					sm.update();
 				}
 			}else {
@@ -218,7 +218,7 @@ class SimpleStateMachine extends State
 	 * @param	_name The name of the desired state.
 	 * @return A pointer to the desired state.
 	 */
-	public function getState(_name:String):State{
+	public function getState(_name:String):TskState{
 		for (s in states) {
 			if (s.name == _name) {
 				return s;

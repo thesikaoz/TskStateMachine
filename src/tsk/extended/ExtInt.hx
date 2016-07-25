@@ -1,4 +1,4 @@
-package extended;
+package tsk.extended;
 
 /**
  * ...

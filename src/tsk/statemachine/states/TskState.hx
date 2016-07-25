@@ -1,13 +1,13 @@
-package statemachine.states;
-import statemachine.behaviours.TskBaseBehaviour;
-import statemachine.rules.AfterRule;
-import tools.statemachine.rules.ConditionalRule;
+package tsk.statemachine.states;
+import tsk.statemachine.behaviours.TskBaseBehaviour;
+import tsk.statemachine.rules.TskAfterRule;
+import tsk.statemachine.rules.TskRule;
 import flixel.FlxSprite;
 /**
  * ...
  * @author Dany
  */
-class State
+class TskState
 {
 	/**
 	 * The name of this state.
@@ -16,7 +16,7 @@ class State
 	/**
 	 * Array containing the rules to transition from this state into others.
 	 */
-	public var rules(default, null):Array<ConditionalRule>;
+	public var rules(default, null):Array<TskRule>;
 	
 	public var behaviour:TskBehaviour<FlxSprite>;
 	/**
@@ -25,7 +25,7 @@ class State
 	 */
 	public function new(_name:String,?_behaviour:TskBehaviour<FlxSprite>) {
 		this.name = _name;
-		this.rules = new Array<ConditionalRule>();
+		this.rules = new Array<TskRule>();
 		if (_behaviour != null){
 			behaviour = _behaviour;
 		}else{
@@ -42,7 +42,7 @@ class State
 	 */
 	public function addTransition(_destiny:String , _condition:Void->Bool, ?_requiredValue:Bool = true, ?_onTransition:Void->Void) {
 		removeTransitionTo(_destiny);
-		rules.push(new ConditionalRule(_destiny, _condition, _requiredValue, _onTransition));
+		rules.push(new TskRule(_destiny, _condition, _requiredValue, _onTransition));
 	}
 	
 	/**
@@ -55,7 +55,7 @@ class State
 	 */
 	public function addTransitionAfter(_destiny:String, _seconds:Float, ?_onTransition:Void->Void, ?_condition:Void->Bool, ?_requiredValue:Bool = true) {
 		removeTransitionTo(_destiny);
-		rules.push(new AfterRule(_destiny, _seconds, _onTransition, _condition, _requiredValue));
+		rules.push(new TskAfterRule(_destiny, _seconds, _onTransition, _condition, _requiredValue));
 	}
 	
 	/**
@@ -63,7 +63,7 @@ class State
 	 * @param	_state The name of the destination state to look for.
 	 */
 	public function removeTransitionTo(_state:String) {
-		var filteredRules:Array<ConditionalRule> = rules.filter(function(r:ConditionalRule):Bool { return r.destiny == _state; } );
+		var filteredRules:Array<TskRule> = rules.filter(function(r:TskRule):Bool { return r.destiny == _state; } );
 		for (rule in filteredRules) {
 			rules.remove(rule);
 		}
@@ -74,8 +74,8 @@ class State
 	 */
 	public function resetCounters() {
 		for (rule in rules) {
-			if (Std.instance(rule, AfterRule) != null) {
-				var r:AfterRule = cast rule;
+			if (Std.instance(rule, TskAfterRule) != null) {
+				var r:TskAfterRule = cast rule;
 				r.resetCounter();
 			}
 		}

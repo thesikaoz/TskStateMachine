@@ -1,12 +1,12 @@
-package statemachine.machines;
+package tsk.statemachine.machines;
 import flixel.animation.FlxAnimationController;
-import statemachine.behaviours.TskBaseBehaviour;
+import tsk.statemachine.behaviours.TskBaseBehaviour;
 import flixel.FlxSprite;
 /**
  * An extended machine that can control animations for FlxSprite too.
  * @author Dany
  */
-class GraphicStateMachine extends SimpleStateMachine
+class TskGraphicStateMachine extends TskSimpleStateMachine
 {
 
 	/**

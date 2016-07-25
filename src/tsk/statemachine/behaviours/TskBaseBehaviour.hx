@@ -1,7 +1,7 @@
-package statemachine.behaviours;
+package tsk.statemachine.behaviours;
 import flixel.FlxSprite;
-import statemachine.machines.SimpleStateMachine;
-import statemachine.states.State;
+import tsk.statemachine.machines.TskSimpleStateMachine;
+import tsk.statemachine.states.TskState;
 
 typedef TskBaseBehaviour=TskBehaviour<FlxSprite>
 
