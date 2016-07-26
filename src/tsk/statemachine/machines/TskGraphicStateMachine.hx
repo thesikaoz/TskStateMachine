@@ -43,7 +43,7 @@ class TskGraphicStateMachine extends TskSimpleStateMachine
 	
 	override function forceState(_state:String,?_force:Bool=false) :Bool
 	{
-		var r:Bool=super.forceState(_state,_force);
+		var r:Bool=super.switch(_state,_force);
 		if (animation.getByName(state.name) != null) {
 			animation.play(state.name);
 		}

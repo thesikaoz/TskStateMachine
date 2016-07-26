@@ -57,7 +57,7 @@ class TskSimpleStateMachine extends TskState
 	public function start(initialState:String) {
 		startingState = initialState;
 		if(startingState!=null){
-			if (forceState(startingState)) {
+			if (switch(startingState)) {
 				paused = false;
 			}
 		}else {
@@ -84,7 +84,7 @@ class TskSimpleStateMachine extends TskState
 	 */
 	public function restart() {
 		if(startingState!=null){
-			if (forceState(startingState)) {
+			if (switch(startingState)) {
 				paused = false;
 			}
 		}else {
@@ -113,7 +113,7 @@ class TskSimpleStateMachine extends TskState
 	 * @param	_state The name of the state to go to.
 	 * @return Wheter the new state was initiated succesfully
 	 */
-	public function forceState(_state:String,?_force:Bool=false):Bool {
+	public function switch(_state:String,?_force:Bool=false):Bool {
 		var s:TskState = getState(_state);
 		if (s != null) {
 			if (!_force){
@@ -164,54 +164,49 @@ class TskSimpleStateMachine extends TskState
 	/**
 	 * To be called on the update method on the object, performs all the processing of transitions and submachines.
 	 */
-	public function update() {
-		if (!paused){
-			if (state != null) {
-				currentState = state.name; //update string value
-				state.behaviour.onUpdate(0.0);
-				for (rule in state.rules) {
-					if (rule.condition() == rule.requiredValue) { //the rule has met it's condition
-						//we clean up the current state to ready up for change
-						if(rule.onTransition!=null)rule.onTransition();
-						cleanUpState();
-						
-						if (forceState(rule.destiny)) { //if the state it's not null change it, if it is launch error
-							lastState = currentState;
-							
-							//we starte it if it's a machine
-							if (Std.instance(state, TskSimpleStateMachine) != null) {
-								var sm:TskSimpleStateMachine = cast state;
-								sm.restart();
-							}
-							
-						}else {
-							FlxG.log.error("State " + rule.destiny + " does not exist! Execution stopped");
-							paused = true;
-						}
-						return;
-					}
-				}
-				if (Std.instance(state, TskSimpleStateMachine) != null) {
-					var sm:TskSimpleStateMachine = cast state;
-					sm.update();
-				}
-			}else {
-				FlxG.log.error("State machine \""+name+"\" was started without starting state. Execution stopped");
-				paused = true;
-				currentState = "NULL";
+	public function update(e: Float) {
+		if (!paused && state != null) {
+			
+			//update the current state
+			currentState = state.name; //update string value
+			state.onUpdate(e);
+			
+			if (Std.instance(state, TskSimpleStateMachine) != null) {
+				var sm:TskSimpleStateMachine = cast state;
+				sm.update(e);
 			}
+			
+			// transition logic here
+			for (rule in state.rules) {
+				if (rule.condition() == rule.requiredValue) { //the rule has met it's condition
+					
+					//we clean up the current state to ready up for change
+					if(rule.onTransition!=null)rule.onTransition();
+					state.resetCounters();
+					
+					if (switch(rule.destiny)) { //if the state it's not null change it, if it is launch error
+						lastState = currentState;
+						
+						//we starte it if it's a machine
+						if (Std.instance(state, TskSimpleStateMachine) != null) {
+							var sm:TskSimpleStateMachine = cast state;
+							sm.restart();
+						}
+						
+					}else {
+						FlxG.log.error("State " + rule.destiny + " does not exist! Execution stopped");
+						paused = true;
+					}
+					break;
+				}
+			}
+			
+		}else {
+			FlxG.log.error("State machine \""+name+"\" was started without starting state. Execution stopped");
+			paused = true;
+			currentState = "NULL";
 		}
 	}
-	
-	/**
-	 * A function to do the last clean up operations of the state when this is exited.
-	 */
-	private function cleanUpState() {
-		//if (rule.playAnimation) owner.animation.play(state.name);
-		state.resetCounters();
-	}
-	
-	
 	
 	/**
 	 * Pulls a state from the state machine so new transitional rules can be added to it. WARNING: Does not perfom null check.

@@ -18,7 +18,7 @@ class TskState
 	 */
 	public var rules(default, null):Array<TskRule>;
 	
-	public var behaviour:TskBehaviour<FlxSprite>;
+	private var behaviour:TskBehaviour<FlxSprite>;
 	/**
 	 * Constructs a new state.
 	 * @param	_name The name of this state.
@@ -78,6 +78,24 @@ class TskState
 				var r:TskAfterRule = cast rule;
 				r.resetCounter();
 			}
+		}
+	}
+	
+	public function onUpdate(e:Float){
+		if (behaviour != null){
+			behaviour.onUpdate(e);
+		}
+	}
+	
+	public function onEnter(){
+		if (behaviour != null){
+			behaviour.onEnter();
+		}
+	}
+	
+	public function onExit(){
+		if (behaviour != null){
+			behaviour.onExit();
 		}
 	}
 }

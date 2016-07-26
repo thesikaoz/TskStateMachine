@@ -19,7 +19,7 @@ class TskStateSprite extends FlxSprite
 	
 	override public function update(elapsed:Float):Void 
 	{
-		machine.update();
+		machine.update(elapsed);
 		super.update(elapsed);
 	}
 	
