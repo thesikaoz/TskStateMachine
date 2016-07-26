@@ -87,7 +87,11 @@ class TskSimpleStateMachine extends TskState
 	 */
 	public function restart() {
 		if(startingState!=null){
+<<<<<<< HEAD
 			if (switchState(startingState)) {
+=======
+			if (switch(startingState)) {
+>>>>>>> 2fef289deb0a6b2541d1ef5d00070f8be084c9a9
 				paused = false;
 			}
 		}else {
@@ -117,7 +121,11 @@ class TskSimpleStateMachine extends TskState
 	 * @param	_force If true the onExit and onEnter methods of the states will not be executed.
 	 * @return Wheter the new state was initiated succesfully
 	 */
+<<<<<<< HEAD
 	public function switchState(_state:String,?_force:Bool=false):Bool {
+=======
+	public function switch(_state:String,?_force:Bool=false):Bool {
+>>>>>>> 2fef289deb0a6b2541d1ef5d00070f8be084c9a9
 		var s:TskState = getState(_state);
 		if (s != null) {
 			if (!_force){
@@ -188,7 +196,11 @@ class TskSimpleStateMachine extends TskState
 					if(rule.onTransition!=null)rule.onTransition();
 					state.resetCounters();
 					
+<<<<<<< HEAD
 					if (switchState(rule.destiny)) { //if the state it's not null change it, if it is launch error
+=======
+					if (switch(rule.destiny)) { //if the state it's not null change it, if it is launch error
+>>>>>>> 2fef289deb0a6b2541d1ef5d00070f8be084c9a9
 						lastState = currentState;
 						
 						//we starte it if it's a machine
